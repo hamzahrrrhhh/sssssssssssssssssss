@@ -1,0 +1,1257 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة زفاف - تصميم أنيق</title>
+
+    <!-- جلب الخطوط العربية المطلوبة -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Rakkas&display=swap" rel="stylesheet">
+
+    <style>
+        /* ======== إعدادات أساسية ======== */
+        :root {
+            --gold-main: #b38728;
+            --gold-light: #d4af37;
+            --gold-dark: #a0792a; /* لون ذهبي أغمق */
+            --background-color: #fdfaf2;
+            --warm-white: #FDF5E6;
+            --warm-gray: #706c61;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Amiri', serif;
+            background-color: var(--background-color);
+        }
+
+        /* ======== شريط الحالة العلوي ======== */
+        .status-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 20px;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--gold-main);
+            font-family: 'Rakkas', serif;
+            font-size: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: var(--background-color);
+            border-bottom: 1px solid rgba(179, 135, 40, 0.2);
+        }
+
+        .status-bar-title {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        /* ======== قائمة التنقل (الهامبرغر) ======== */
+        .hamburger-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            position: absolute;
+            left: 20px; /* يمين في RTL */
+            z-index: 101;
+        }
+
+            .hamburger-btn .bar {
+                display: block;
+                width: 25px;
+                height: 3px;
+                margin: 5px auto;
+                background-color: var(--gold-main);
+                transition: all 0.3s ease-in-out;
+            }
+
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            z-index: 200;
+        }
+
+            .main-nav.is-active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .main-nav ul {
+                list-style: none;
+                text-align: center;
+            }
+
+                .main-nav ul li {
+                    margin: 30px 0;
+                }
+
+                    .main-nav ul li a {
+                        color: #fff;
+                        text-decoration: none;
+                        font-family: 'Amiri', serif;
+                        font-size: 2rem;
+                        font-weight: 700;
+                        transition: color 0.3s ease;
+                    }
+
+                        .main-nav ul li a:hover {
+                            color: var(--gold-light);
+                        }
+
+        .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px; /* يسار في RTL */
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 3rem;
+            cursor: pointer;
+        }
+
+
+        /* ======== تصميم قسم الـ Hero ======== */
+        .hero-section {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .slideshow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            transform: scale(1.1);
+        }
+
+            .slide.active {
+                opacity: 1;
+                animation: kenburns 15s linear forwards;
+            }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 30px 15px;
+            animation: fade-in-content 2s ease-in-out;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            width: 95%;
+            max-width: 900px;
+            overflow: hidden;
+        }
+
+            .hero-content::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -150%;
+                width: 70%;
+                height: 100%;
+                background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0) 100%);
+                transform: skewX(-25deg);
+                animation: glare-animation 8s infinite ease-in-out;
+            }
+
+            .hero-content h1 {
+                font-family: 'Amiri', serif;
+                font-size: 3.5rem;
+                font-weight: 700;
+                white-space: nowrap;
+                margin-bottom: 20px;
+                line-height: 1.6;
+                background: linear-gradient(120deg, #BF953F, #FCF6BA, #B38728);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                text-fill-color: transparent;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.6), 0 0 1px rgba(212, 175, 55, 0.7);
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+                color: var(--warm-white);
+                margin-bottom: 25px;
+                line-height: 1.7;
+            }
+
+        .groom-bride-names {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+            .groom-bride-names .name {
+                font-family: 'Rakkas', serif;
+                font-size: 3.2rem;
+                font-weight: 400;
+                color: #fff;
+                text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+                line-height: 1;
+                padding-bottom: 10px;
+            }
+
+            .groom-bride-names .separator {
+                font-family: 'Times New Roman', serif;
+                font-size: 2.2rem;
+                color: var(--gold-light);
+                font-weight: bold;
+                line-height: 1;
+            }
+
+        /* ======== قسم التفاصيل والعداد الزمني ======== */
+        .details-section {
+            background-color: var(--background-color);
+            position: relative;
+            height: 70px; /* تقليل ارتفاع القسم ليصبح فاصلاً */
+            overflow: visible;
+        }
+
+        .countdown-title {
+            font-family: 'Amiri', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--gold-main);
+            margin-bottom: 30px;
+            z-index: 2;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .countdown-container {
+            display: flex;
+            gap: 20px;
+            z-index: 2;
+            justify-content: center;
+        }
+
+        .time-unit {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: transparent;
+            border: 3px solid var(--gold-light);
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05), inset 0 0 8px rgba(212, 175, 55, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+            .time-unit:hover {
+                transform: scale(1.05);
+            }
+
+            .time-unit .number {
+                font-family: 'Amiri', serif;
+                font-size: 2rem;
+                font-weight: 700;
+                color: var(--gold-main);
+                line-height: 1;
+            }
+
+            .time-unit .label {
+                font-size: 0.7rem;
+                color: var(--warm-gray);
+                margin-top: 5px;
+            }
+
+        /* --- تعديلات العداد الزمني في القسم الأول --- */
+        .hero-countdown {
+            position: absolute;
+            bottom: 5vh;
+            left: 0;
+            right: 0;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero-section .countdown-title {
+            color: var(--warm-white);
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .hero-section .time-unit {
+            background: rgba(255, 255, 255, 0.15); /* خلفية زجاجية */
+            backdrop-filter: blur(10px); /* التأثير الضبابي */
+            -webkit-backdrop-filter: blur(10px); /* لدعم متصفح سفاري */
+            border: 2px solid rgba(255, 255, 255, 0.2); /* إطار خفيف */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* ظل ناعم */
+        }
+
+            .hero-section .time-unit .number {
+                color: #fff;
+            }
+
+            .hero-section .time-unit .label {
+                color: rgba(255, 255, 255, 0.85);
+            }
+
+
+        .floral-decoration-center {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            transform: translateY(-50%);
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        /* ======== قسم الألبوم الجديد ======== */
+        .album-section {
+            padding: 80px 0;
+            background-color: var(--background-color);
+            overflow: hidden;
+            position: relative;
+            border-top: 2px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Amiri', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold-main);
+            margin-bottom: 40px;
+        }
+
+        .album-carousel {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            perspective: 1200px;
+        }
+
+        .album-card {
+            position: absolute;
+            width: 240px;
+            height: 320px;
+            top: 10px;
+            left: 50%;
+            transform-style: preserve-3d;
+            transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out, z-index 0.7s ease-in-out;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 4px solid #fff;
+        }
+
+            .album-card img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 10px;
+            }
+
+        .album-nav {
+            text-align: center;
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- تصميم أيقونة النبض لتكون الزر الرئيسي --- */
+        .nav-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 10;
+            padding: 0;
+        }
+
+            .nav-btn:hover {
+                transform: scale(1.1);
+            }
+
+        .nav-icon {
+            width: 120px; /* تكبير الأيقونة الموحدة */
+            height: auto;
+        }
+
+            .nav-icon path, .nav-icon polyline {
+                fill: var(--gold-light);
+                stroke: var(--gold-light);
+                transition: fill 0.3s ease, stroke 0.3s ease;
+            }
+
+        .nav-btn:hover .nav-icon path,
+        .nav-btn:hover .nav-icon polyline {
+            fill: var(--gold-main);
+            stroke: var(--gold-main);
+        }
+
+        .nav-icon polyline {
+            fill: none;
+        }
+
+        /* ======== قسم الصورة الختامية ======== */
+        .final-image-section {
+            height: 100vh;
+            width: 100%;
+            background-color: var(--background-color);
+            background-image: url('r.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-top: 2px solid rgba(212, 175, 55, 0.2);
+        }
+
+            .final-image-section .content {
+                position: relative;
+                z-index: 1;
+                color: var(--gold-main);
+                font-family: 'Amiri', serif;
+                font-size: 2.5rem;
+                font-weight: 700;
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+            }
+
+        /* ======== قسم تفاصيل الحفل ======== */
+        .event-details-section {
+            padding: 80px 20px;
+            background-color: var(--background-color);
+            text-align: center;
+            border-top: 2px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .details-container {
+            display: flex;
+            flex-direction: column; /* جعل التفاصيل تظهر بشكل عمودي */
+            align-items: center; /* توسيط التفاصيل */
+            gap: 30px; /* مسافة بين كل تفصيل */
+            margin-top: 40px;
+        }
+
+        .detail-item {
+            width: 90%;
+            max-width: 450px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.4); /* خلفية زجاجية */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.3); /* إطار ذهبي شفاف */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .detail-item:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 25px rgba(179, 135, 40, 0.15);
+            }
+
+            .detail-item .icon {
+                width: 50px;
+                height: 50px;
+                margin-bottom: 5px; /* تقليل المسافة بين الأيقونة والعنوان */
+                fill: var(--gold-main);
+            }
+
+            .detail-item h3 {
+                font-family: 'Amiri', serif;
+                font-size: 1.8rem;
+                font-weight: 700;
+                color: var(--gold-main);
+                margin-bottom: 10px;
+            }
+
+            .detail-item p {
+                font-size: 1.1rem;
+                color: var(--warm-gray);
+                line-height: 1.7;
+            }
+
+        /* ======== قسم سجل الزوار ======== */
+        .guestbook-section {
+            padding: 80px 20px;
+            background-color: var(--background-color);
+            border-top: 2px solid rgba(179, 135, 40, 0.2);
+        }
+
+        .guestbook-form {
+            max-width: 600px;
+            margin: 0 auto 50px auto;
+            text-align: center;
+        }
+
+            .guestbook-form input,
+            .guestbook-form textarea {
+                width: 100%;
+                padding: 15px;
+                margin-bottom: 20px;
+                border: 2px solid rgba(179, 135, 40, 0.3);
+                border-radius: 10px;
+                background-color: #fff;
+                font-family: 'Amiri', serif;
+                font-size: 1rem;
+                color: var(--warm-gray);
+                transition: border-color 0.3s ease;
+            }
+
+                .guestbook-form input:focus,
+                .guestbook-form textarea:focus {
+                    outline: none;
+                    border-color: var(--gold-main);
+                }
+
+            .guestbook-form textarea {
+                resize: vertical;
+                min-height: 120px;
+            }
+
+            .guestbook-form button {
+                padding: 15px 40px;
+                background-color: var(--gold-main);
+                color: #fff;
+                border: none;
+                border-radius: 10px;
+                font-family: 'Amiri', serif;
+                font-size: 1.1rem;
+                font-weight: 700;
+                cursor: pointer;
+                transition: background-color 0.3s ease, transform 0.3s ease;
+            }
+
+                .guestbook-form button:hover {
+                    background-color: var(--gold-dark);
+                    transform: scale(1.05);
+                }
+
+        .messages-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .message-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            border-top: 5px solid var(--gold-light);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+            animation: fade-in-card 0.5s ease;
+        }
+
+            .message-card .message-text {
+                font-size: 1rem;
+                color: var(--warm-gray);
+                line-height: 1.7;
+                margin-bottom: 15px;
+                font-style: italic;
+                max-height: 150px; /* تحديد ارتفاع أقصى للنص */
+                overflow-y: auto; /* إضافة شريط تمرير عند الحاجة */
+                word-wrap: break-word; /* لضمان التفاف الكلمات الطويلة */
+                padding-left: 10px; /* مسافة لشريط التمرير */
+            }
+
+            .message-card .message-author {
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: var(--gold-main);
+                text-align: left;
+            }
+
+        /* ======== الفوتر ======== */
+        .site-footer {
+            padding: 50px 20px;
+            background-color: #f8f4e3; /* لون أغمق قليلاً من الخلفية */
+            border-top: 2px solid rgba(179, 135, 40, 0.2);
+        }
+
+        .footer-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+            .footer-item p, .footer-item a {
+                color: var(--warm-gray);
+                font-size: 1rem;
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+
+                .footer-item a:hover {
+                    color: var(--gold-main);
+                }
+
+            .footer-item .icon {
+                width: 24px;
+                height: 24px;
+                fill: var(--gold-main);
+            }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+            .social-links a, .social-links button {
+                display: block;
+                transition: transform 0.3s ease;
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 0;
+            }
+
+                .social-links a:hover, .social-links button:hover {
+                    transform: scale(1.2);
+                }
+
+
+        /* ======== تعريف الأنيميشن ======== */
+        @keyframes kenburns {
+            from {
+                transform: scale(1.1);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fade-in-content {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glare-animation {
+            0% {
+                left: -150%;
+            }
+
+            50% {
+                left: 150%;
+            }
+
+            100% {
+                left: -150%;
+            }
+        }
+
+        @keyframes gradient-animation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes fade-in-card {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ======== تحسينات للشاشات المختلفة ======== */
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 100vh;
+            }
+            /* إرجاع الارتفاع الكامل للهاتف */
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .groom-bride-names .name {
+                font-size: 2.5rem;
+            }
+
+            .groom-bride-names .separator {
+                font-size: 1.8rem;
+            }
+
+            .details-section {
+                padding: 0;
+            }
+
+            .countdown-title {
+                font-size: 1.8rem;
+            }
+
+            .countdown-container {
+                gap: 10px;
+            }
+
+            .time-unit {
+                width: 70px;
+                height: 70px;
+                border-width: 2px;
+            }
+
+                .time-unit .number {
+                    font-size: 1.5rem;
+                }
+
+                .time-unit .label {
+                    font-size: 0.6rem;
+                }
+
+            .album-section {
+                padding: 40px 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 25px;
+            }
+
+            .album-carousel {
+                height: 65vh;
+                perspective: none;
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .album-card {
+                position: static;
+                transform: none !important;
+                opacity: 1 !important;
+                z-index: 1 !important;
+                width: 90%;
+                height: 95%;
+                flex-shrink: 0;
+                margin: 0 5%;
+                scroll-snap-align: center;
+                left: auto;
+                top: auto;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            }
+
+            .final-image-section .content {
+                font-size: 1.8rem;
+                padding: 0 20px;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 540px) {
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .groom-bride-names {
+                margin-top: 20px;
+                gap: 15px;
+            }
+
+                .groom-bride-names .name {
+                    font-size: 2rem;
+                }
+
+                .groom-bride-names .separator {
+                    font-size: 1.6rem;
+                }
+        }
+    </style>
+</head>
+<body>
+    <div class="status-bar">
+        <button class="hamburger-btn">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+        <span class="status-bar-title">Creative Design</span>
+    </div>
+
+    <nav class="main-nav">
+        <button class="close-btn">&times;</button>
+        <ul>
+            <li><a href="#hero-section" class="nav-link">الدعوة</a></li>
+            <li><a href="#album-section" class="nav-link">ألبوم الصور</a></li>
+            <li><a href="#event-details-section" class="nav-link">تفاصيل الحفل</a></li>
+            <li><a href="#guestbook-section" class="nav-link">سجل الزوار</a></li>
+        </ul>
+    </nav>
+
+    <section id="hero-section" class="hero-section">
+        <div class="slideshow-container">
+            <div class="slide active" style="background-image: url('r.png');"
+                  background-image: url('r.png');
+            <div class="slide" style="background-image: url('https://images.pexels.com/photos/313707/pexels-photo-313707.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"></div>
+            <div class="slide" style="background-image: url('https://images.pexels.com/photos/931177/pexels-photo-931177.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"></div>
+            <div class="slide" style="background-image: url('https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"></div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>بَارَكَ اللَّهُ لَهُمَا وَبَارَكَ عَلَيْهِمَا وَجَمَعَ بَيْنَهُمَا فِي خَيْرٍ</h1>
+            <p>نتشرف بدعوتكم لمشاركتنا فرحتنا</p>
+            <div class="groom-bride-names">
+                <span class="name">فاطمة</span>
+                <span class="separator">&</span>
+                <span class="name">أحمد</span>
+            </div>
+        </div>
+
+        <!-- العداد الزمني في القسم الأول -->
+        <div class="hero-countdown">
+            <h2 class="countdown-title">الوقت المتبقي لأسعد لحظة</h2>
+            <div class="countdown-container">
+                <div class="time-unit">
+                    <span id="days" class="number">00</span>
+                    <span class="label">أيام</span>
+                </div>
+                <div class="time-unit">
+                    <span id="hours" class="number">00</span>
+                    <span class="label">ساعات</span>
+                </div>
+                <div class="time-unit">
+                    <span id="minutes" class="number">00</span>
+                    <span class="label">دقائق</span>
+                </div>
+                <div class="time-unit">
+                    <span id="seconds" class="number">00</span>
+                    <span class="label">ثواني</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="details-section">
+        <img src="https://i.pinimg.com/originals/13/ab/a6/13aba61a5251a3cbfb0b97c064a13fda.png" alt="زخرفة ورد" class="floral-decoration-center" onerror="this.style.display='none'">
+    </section>
+
+    <section id="album-section" class="album-section">
+        <h2 class="section-title">أجمل لحظاتنا</h2>
+        <div class="album-carousel">
+            <!-- الصور ستتم إضافتها هنا عبر الجافاسكريبت -->
+        </div>
+        <div class="album-nav">
+            <button class="nav-btn" id="album-nav-btn">
+                <svg class="nav-icon" viewBox="0 0 100 40">
+                    <g>
+                        <!-- القلب الأيسر -->
+                        <path transform="translate(0, 8) rotate(90, 12, 12)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                        <!-- خط النبض -->
+                        <polyline points="25 20, 40 20, 45 15, 55 25, 60 20, 75 20" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <!-- القلب الأيمن (المعاكس) -->
+                        <path transform="translate(76, 8) rotate(-90, 12, 12)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                    </g>
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- قسم الصورة الختامية -->
+    <section id="final-image-section" class="final-image-section">
+        
+    </section>
+
+    <!-- قسم تفاصيل الحفل -->
+    <section id="event-details-section" class="event-details-section">
+        <h2 class="section-title">تفاصيل الحفل</h2>
+        <div class="details-container">
+            <div class="detail-item">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,4H18V2H16V4H8V2H6V4H5A2,2 0 0,0 3,6V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V6A2,2 0 0,0 19,4M19,20H5V10H19V20M19,8H5V6H19V8M12,13H17V18H12V13Z" /></svg>
+                <h3>التاريخ</h3>
+                <p>الجمعة، ٢٥ ديسمبر ٢٠٢٥</p>
+            </div>
+            <div class="detail-item">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z" /></svg>
+                <h3>الوقت</h3>
+                <p>تبدأ المراسم الساعة ٨:٠٠ مساءً</p>
+            </div>
+            <div class="detail-item">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" /></svg>
+                <h3>الموقع</h3>
+                <p>قاعة بانوراما، عمان, الأردن</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم سجل الزوار -->
+    <section id="guestbook-section" class="guestbook-section">
+        <h2 class="section-title">سجل الزوار</h2>
+        <form class="guestbook-form" id="guestbook-form">
+            <input type="text" id="guest-name" placeholder="الاسم الكريم" required>
+            <textarea id="guest-message" placeholder="اترك لنا أمنية جميلة..." required></textarea>
+            <button type="submit">إرسال الأمنية</button>
+        </form>
+        <div class="messages-container" id="messages-container">
+            <!-- الرسائل ستضاف هنا -->
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-item">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" /></svg>
+                <p>قاعة بانوراما، عمان, الأردن</p>
+            </div>
+            <div class="footer-item social-links">
+                <a href="https://wa.me/962791234567" target="_blank" aria-label="WhatsApp">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.75,13.96C17,14.26 17.07,14.73 16.96,15.17C16.86,15.61 16.56,16 16.21,16.35C15.88,16.69 15.45,16.93 15,17.04C14.55,17.15 14.04,17.2 13.53,17.09C12.82,16.92 12.03,16.6 11.16,16.14C9.89,15.44 8.78,14.44 7.89,13.21C7.1,12.1 6.56,11.04 6.27,9.94C6.08,9.23 6,8.5 6.03,7.75C6.07,7.26 6.21,6.8 6.45,6.38C6.69,5.96 7.03,5.62 7.42,5.36C7.81,5.11 8.22,5 8.65,5H9.3C9.63,5 9.93,5.1 10.16,5.29C10.39,5.48 10.58,5.72 10.7,6C10.91,6.41 11.11,6.84 11.29,7.28C11.34,7.41 11.36,7.55 11.37,7.68C11.37,7.83 11.34,7.98 11.27,8.14L10.8,9.04C10.7,9.21 10.66,9.36 10.66,9.48C10.66,9.59 10.68,9.69 10.72,9.78C10.93,10.24 11.27,10.73 11.75,11.25C12.25,11.75 12.73,12.09 13.22,12.28C13.31,12.32 13.41,12.34 13.53,12.34C13.66,12.34 13.81,12.3 13.96,12.2L14.86,11.73C15.02,11.66 15.17,11.63 15.31,11.63C15.45,11.63 15.58,11.65 15.71,11.7C16.16,11.87 16.59,12.07 17,12.29C17.28,12.41 17.52,12.59 17.71,12.82C17.9,13.05 18,13.32 18,13.65V14.24L17.75,13.96M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C10.84,22 9.7,21.76 8.6,21.31L4,22.5L5.19,17.9C4.24,16.54 3.54,14.9 3.54,13.14L3.5,13A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4Z" /></svg>
+                </a>
+                <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.32 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z" /></svg>
+                </a>
+                <button id="share-btn" aria-label="Share">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18,16.08C17.24,16.08 16.56,16.38 16.04,16.85L8.91,12.7C8.96,12.47 9,12.24 9,12C9,11.76 8.96,11.53 8.91,11.3L16.04,7.15C16.56,7.62 17.24,7.92 18,7.92C19.66,7.92 21,6.58 21,5C21,3.42 19.66,2 18,2C16.34,2 15,3.42 15,5C15,5.24 15.04,5.47 15.09,5.7L7.96,9.85C7.44,9.38 6.76,9.08 6,9.08C4.34,9.08 3,10.42 3,12C3,13.58 4.34,14.92 6,14.92C6.76,14.92 7.44,14.62 7.96,14.15L15.09,18.3C15.04,18.53 15,18.76 15,19C15,20.58 16.34,22 18,22C19.66,22 21,20.58 21,19C21,17.42 19.66,16.08 18,16.08Z" /></svg>
+                </button>
+            </div>
+            <div class="footer-item">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z" /></svg>
+                <a href="tel:+962791234567" dir="ltr">+962 79 123 4567</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Hamburger Menu Logic
+            const hamburgerBtn = document.querySelector('.hamburger-btn');
+            const navMenu = document.querySelector('.main-nav');
+            const closeBtn = document.querySelector('.close-btn');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            hamburgerBtn.addEventListener('click', () => {
+                navMenu.classList.add('is-active');
+            });
+
+            closeBtn.addEventListener('click', () => {
+                navMenu.classList.remove('is-active');
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+
+                    navMenu.classList.remove('is-active');
+                });
+            });
+
+
+            // Slideshow logic
+            const slides = document.querySelectorAll('.slide');
+            let currentSlide = 0;
+            if (slides.length > 0) {
+                function showSlide(index) {
+                    slides.forEach((slide) => slide.classList.remove('active'));
+                    slides[index].classList.add('active');
+                }
+                function nextSlide() {
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    showSlide(currentSlide);
+                }
+                showSlide(0);
+                setInterval(nextSlide, 5000);
+            }
+
+            // Countdown timer logic
+            const countdown = () => {
+                const weddingDate = new Date("December 25, 2025 20:00:00").getTime();
+                const now = new Date().getTime();
+                const gap = weddingDate - now;
+
+                if (gap < 0) {
+                    clearInterval(countdownInterval);
+                    const countdownContainer = document.querySelector('.countdown-container');
+                    if (countdownContainer) {
+                        countdownContainer.innerHTML = "<h2 style='color:#b38728; font-size: 1.5rem;'>لقد بدأ الحفل!</h2>";
+                    }
+                    return;
+                }
+
+                const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
+                const textDay = Math.floor(gap / day);
+                const textHour = Math.floor((gap % day) / hour);
+                const textMinute = Math.floor((gap % hour) / minute);
+                const textSecond = Math.floor((gap % minute) / second);
+
+                document.getElementById('days').innerText = String(textDay).padStart(2, '0');
+                document.getElementById('hours').innerText = String(textHour).padStart(2, '0');
+                document.getElementById('minutes').innerText = String(textMinute).padStart(2, '0');
+                document.getElementById('seconds').innerText = String(textSecond).padStart(2, '0');
+            };
+            const countdownInterval = setInterval(countdown, 1000);
+            countdown();
+
+            // Album Carousel Logic
+            const albumCarousel = document.querySelector('.album-carousel');
+            const navBtn = document.getElementById('album-nav-btn');
+            const images = [
+
+                'r.png',
+                'r.png',
+                'r.png',
+                'r.png',
+                'r.png'
+               
+            ];
+
+            if (albumCarousel && navBtn) {
+                images.forEach(src => {
+                    const card = document.createElement('div');
+                    card.classList.add('album-card');
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.alt = 'صورة من الألبوم';
+                    img.onerror = function () { this.src = 'https://placehold.co/600x800/fdfaf2/b38728?text=Image+Not+Found'; };
+                    card.appendChild(img);
+                    albumCarousel.appendChild(card);
+                });
+
+                const albumCards = document.querySelectorAll('.album-card');
+                let currentCardIndex = 0;
+
+                const isMobileView = () => window.innerWidth <= 768;
+
+                function nextCard() {
+                    currentCardIndex = (currentCardIndex + 1) % albumCards.length;
+                    updateView();
+                }
+
+                function prevCard() {
+                    currentCardIndex = (currentCardIndex - 1 + albumCards.length) % albumCards.length;
+                    updateView();
+                }
+
+                function updateView() {
+                    albumCards.forEach((card, i) => {
+                        const offset = (i - currentCardIndex + albumCards.length) % albumCards.length;
+                        let transform = '';
+                        let opacity = 0.4;
+                        let zIndex = 0;
+
+                        switch (offset) {
+                            case 0:
+                                transform = 'translateX(-50%) scale(1) rotateY(0)';
+                                opacity = 1;
+                                zIndex = 2;
+                                break;
+                            case 1:
+                                transform = 'translateX(-25%) scale(0.8) rotateY(-45deg)';
+                                zIndex = 1;
+                                break;
+                            case albumCards.length - 1:
+                                transform = 'translateX(-75%) scale(0.8) rotateY(45deg)';
+                                zIndex = 1;
+                                break;
+                            default:
+                                transform = `translateX(-50%) scale(0.6) rotateY(0)`;
+                                opacity = 0;
+                                break;
+                        }
+                        card.style.transform = transform;
+                        card.style.opacity = opacity;
+                        card.style.zIndex = zIndex;
+                    });
+                }
+
+                navBtn.addEventListener('click', function (event) {
+                    const rect = navBtn.getBoundingClientRect();
+                    const clickX = event.clientX - rect.left;
+                    const buttonWidth = navBtn.offsetWidth;
+
+                    if (isMobileView()) {
+                        if (clickX < buttonWidth / 2) {
+                            albumCarousel.scrollBy({ left: -albumCarousel.clientWidth, behavior: 'smooth' });
+                        } else {
+                            albumCarousel.scrollBy({ left: albumCarousel.clientWidth, behavior: 'smooth' });
+                        }
+                    } else {
+                        if (clickX < buttonWidth / 2) {
+                            prevCard();
+                        } else {
+                            nextCard();
+                        }
+                    }
+                });
+
+                function setupAlbum() {
+                    if (!isMobileView()) {
+                        updateView();
+                        let autoPlayInterval = setInterval(nextCard, 5000);
+                        albumCarousel.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+                        albumCarousel.addEventListener('mouseleave', () => autoPlayInterval = setInterval(nextCard, 5000));
+                    }
+                }
+
+                setupAlbum();
+                window.addEventListener('resize', setupAlbum);
+            }
+
+            // Share Button Logic
+            const shareBtn = document.getElementById('share-btn');
+            if (shareBtn) {
+                shareBtn.addEventListener('click', async () => {
+                    const shareData = {
+                        title: 'دعوة زفاف فاطمة وأحمد',
+                        text: 'نتشرف بدعوتكم لمشاركتنا فرحتنا!',
+                        url: window.location.href
+                    };
+                    try {
+                        if (navigator.share) {
+                            await navigator.share(shareData);
+                        } else {
+                            // Fallback for browsers that don't support Web Share API
+                            alert('خاصية المشاركة غير مدعومة في هذا المتصفح. يمكنك نسخ الرابط يدوياً.');
+                        }
+                    } catch (err) {
+                        console.error('Error sharing:', err);
+                    }
+                });
+            }
+
+            // Guestbook Logic
+            const guestbookForm = document.getElementById('guestbook-form');
+            const messagesContainer = document.getElementById('messages-container');
+
+            guestbookForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const nameInput = document.getElementById('guest-name');
+                const messageInput = document.getElementById('guest-message');
+
+                const name = nameInput.value.trim();
+                const message = messageInput.value.trim();
+
+                if (name === '' || message === '') {
+                    alert('الرجاء إدخال الاسم والرسالة.');
+                    return;
+                }
+
+                const messageCard = document.createElement('div');
+                messageCard.classList.add('message-card');
+
+                const messageText = document.createElement('p');
+                messageText.classList.add('message-text');
+                messageText.textContent = `"${message}"`;
+
+                const messageAuthor = document.createElement('p');
+                messageAuthor.classList.add('message-author');
+                messageAuthor.textContent = `- ${name}`;
+
+                messageCard.appendChild(messageText);
+                messageCard.appendChild(messageAuthor);
+
+                messagesContainer.prepend(messageCard);
+
+                nameInput.value = '';
+                messageInput.value = '';
+            });
+        });
+    </script>
+
+</body>
+</html>
